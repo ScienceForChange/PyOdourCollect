@@ -21,7 +21,7 @@ so they download the OdourCollect APP on their phones and start mapping odour ob
   </a>
   <br/>
   <a href='https://apps.apple.com/es/app/odourcollect/id1457119732'>
-    <img alt='Download on the App Store' width="175" src='http://assets.stickpng.com/images/5a902db97f96951c82922874.png'/>
+    <img alt='Download on the App Store' width="175" src='https://developer.apple.com/app-store/marketing/guidelines/images/badge-example-preferred_2x.png'/>
   </a>
 </div>
 
