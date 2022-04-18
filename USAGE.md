@@ -15,7 +15,7 @@ If you find out that there is not odur observation data for the zone you wanted 
 you can always lead a local movement in your community and start recruiting neighbours, 
 so they download the OdourCollect APP on their phones and start mapping odour observations!
 
-<div style="text-align:center">
+<p align="center">
   <a href='https://play.google.com/store/apps/details?id=es.nobone.manchesterwebapp&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
     <img alt='Get it on Google Play' width="200" src='https://play.google.com/intl/es-419/badges/static/images/badges/en_badge_web_generic.png'/>
   </a>
@@ -23,7 +23,7 @@ so they download the OdourCollect APP on their phones and start mapping odour ob
   <a href='https://apps.apple.com/es/app/odourcollect/id1457119732'>
     <img alt='Download on the App Store' width="175" src='https://developer.apple.com/app-store/marketing/guidelines/images/badge-example-preferred_2x.png'/>
   </a>
-</div>
+</p>
 
 ## CLI Vs Module
 The command line interface (CLI) tool provided simplifies downloading data from OdourCollect in CSV or XLSX formats.
