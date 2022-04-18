@@ -11,6 +11,20 @@ If you previously want to know if the citizens have provided odour observations 
 the best way to know is visiting [OdourCollect.eu](https://odourcollect.eu) directly and taking a look at the map. 
 OdourCollect shares all the collected data for free, the same way the Citizen Scientists worldwide provide it.
 
+If you find out that there is not odur observation data for the zone you wanted to analyse, 
+you can always lead a local movement in your community and start recruiting neighbours, 
+so they download the OdourCollect APP on their phones and start mapping odour observations!
+
+<div style="text-align:center">
+  <a href='https://play.google.com/store/apps/details?id=es.nobone.manchesterwebapp&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'>
+    <img alt='Get it on Google Play' width="200" src='https://play.google.com/intl/es-419/badges/static/images/badges/en_badge_web_generic.png'/>
+  </a>
+  <br/>
+  <a href='https://apps.apple.com/es/app/odourcollect/id1457119732'>
+    <img alt='Download on the App Store' width="175" src='http://assets.stickpng.com/images/5a902db97f96951c82922874.png'/>
+  </a>
+</div>
+
 ## CLI Vs Module
 The command line interface (CLI) tool provided simplifies downloading data from OdourCollect in CSV or XLSX formats.
 and is the to-go choice if you plan to analyze the data:
@@ -51,7 +65,84 @@ The OdourCollect data that is not going to be provided by PyOdourCollect is:
 - Full address that was inferred at the time of observation (it can be inferred from GPS coordinates anyway).
 
 # Installing the module and the CLI
-
+(soon)
 
 # Using the CLI
-I
+This module includes a command line interface tool that is installed as `odourcollect` (GNU/Linux, MacOS) or `odourcollect.exe` (Windows).
+
+This is the full help and usage output of the tool:
+```
+usage: OdourCollect [-h] [--startdate STARTDATE] [--enddate ENDDATE] [--category CATEGORY] [--odourtype ODOURTYPE]
+                    [--hedonic [{pleasant,unpleasant,neutral,all}]] [--minintensity MININTENSITY] [--maxintensity MAXINTENSITY] [--gps lat long]
+                    [--output path to output file] [--odourlist]
+
+pyOdourCollect: A tool that obtains odour observations made by citizens at odourcollect.eu Citizen Obsevatory.
+
+optional arguments:
+  -h, --help            show this help message and exit
+
+Observation filter options:
+  --startdate STARTDATE, -s STARTDATE
+                        Earliest date (yyyy-mm-dd).
+  --enddate ENDDATE, -e ENDDATE
+                        Latest date (yyyy-mm-dd).
+  --category CATEGORY, -c CATEGORY
+                        Category of odours (known as 'type' in OdourCollect) From 1 to 9. 0 means all.
+  --odourtype ODOURTYPE, -t ODOURTYPE
+                        Type of odour (known as 'subtype' in OdourCollect). From 1 to 89. 0 means all.
+  --hedonic [{pleasant,unpleasant,neutral,all}]
+                        Hedonic tones. "unpleasant" (from -1 to -4), "pleasant" (from +1 to +4), "neutral" (tone zero only) or "all" (get everything,
+                        default
+  --minintensity MININTENSITY
+                        Minimum intensity of odour, from 0 to 6.
+  --maxintensity MAXINTENSITY
+                        Maximum intensity of odour, from 0 to 6.
+
+Analysis options:
+  --gps lat long        If specified, observations will include the distance in Km. from the specified GPS coordinates. Useful to analize data against a
+                        suspicious point of odour emission in a specific area of interest. Takes two arguments in the form of decimal numbers for lat/long
+                        gps coordenates i.e.: --gps 41.409032 2.222619
+
+Output options:
+  --output path to output file
+                        Dump the results in xlsx/csv format to the specified file If not specified, defaults to "odourcollect.csv". File format is
+                        autodetected based on extension.
+
+List of odour categories and types:
+  --odourlist           Prints the full list of odour categories and types used in OdourCollect.eu web and OdourCollect App
+
+Run this program with --odourlist parameter for a full list of odour categories and types.
+```
+More detail on CLI params:
+
+`--startdate` and `--enddate`: download only data comprised between start and end dates. 
+When start date is not specified, it uses 2019-01-01 (OdourCollect launched on 2019). 
+When end date is not specified, it uses current date, so it virtually means no end date.
+Format of dates must be in `yyyy-mm-dd` format.
+
+`--category` and `--type`: download only odour observations of certain odours based on a two tier classification system provided by OdourCollect.
+Please note that "category" and "type" in PyOdourCollect are known as "type" and "subtype" in OdourCollect respectively.
+While the first tier of classification provides only 8 options and provides a general idea for preliminary analysis, the second tier provides almost 90 classificators and is the most precise information that citizens can provide in the odour observation.
+`--category` accepts numbers from 0 to 9. `--type` accepts numbers from 0 to 89. In both cases, 0 means "all" and is the default if not specified, so you can safely ignore these parameters if you prefer to download full data.
+The full list of odour categories and odour types can be explored below.
+
+`--hedonic`: The hedonic tone provides an observation filter based on the subjective pleasantness perception that the Citizen had when he/she reported. 
+Internally, OdourCollect allows up to 9 degrees of pleasantness from -4 (most annoyant) to +4 (most pleasant), being 0 neutral. 
+In order to simplify CLI usage and avoid managing ranges of negative numbers (which could be counterintuitive), 
+we decided to provide just shorthand keywords: `pleasant` (from +1 to +4), `unpleasant` (from -1 to -4), 
+`neutral` (observations with tone zero only), and `all` (which is the default, so you can safely omit the parameter if you plan to download full data).
+
+`--minintensity` and `--maxintensity`: Filter observations by a minimum/maximum level of intensity reported by citizen at the time of observation. 
+Values range from 0 (no odour) to 6 (extremely strong). Defaults are 0 for minimum and 6 for maximum, so you can safely omit these parameters if you plan to download full data.
+
+`--gps`: This parameter expects two numbers in the form GPS coordinates for a given point (for example `--gps 41.409032 2.222619`). 
+When specified, the downloaded data will include an extra column called `distance` at the end. 
+This column will provide the distance (with an accuracy of 0.01 Kms.) between the point where the observation was made and the point specified with `--gps`.
+This is extremely useful when you are analyzing a specific area of interest around a suspicious point from which odour emissions allegedly come.
+You can then start your analysis removing or filtering out all the observations that are beyond a given distance (say, 10kms) to perform an analysis of a local area
+(which is the most useful and logical use case). In future versions we plan to provide an option to filter out the observations that are past a given distance, 
+so you have not to filter by yourself at a later stage. For the time being, please manually filter observations that are at 999 Kms from your area of interest :wink:.   
+
+
+ 
+
