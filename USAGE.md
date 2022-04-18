@@ -26,7 +26,7 @@ so they download the OdourCollect APP on their phones and start mapping odour ob
 </p>
 
 ## CLI Vs Module
-The command line interface (CLI) tool provided simplifies downloading data from OdourCollect in CSV or XLSX formats.
+The command line interface (CLI) tool provided simplifies downloading data from OdourCollect in CSV or XLSX formats
 and is the to-go choice if you plan to analyze the data:
 - Manually
 - With Microsoft's Excel or PowerBI
@@ -142,6 +142,178 @@ This is extremely useful when you are analyzing a specific area of interest arou
 You can then start your analysis removing or filtering out all the observations that are beyond a given distance (say, 10kms) to perform an analysis of a local area
 (which is the most useful and logical use case). In future versions we plan to provide an option to filter out the observations that are past a given distance, 
 so you have not to filter by yourself at a later stage. For the time being, please manually filter observations that are at 999 Kms from your area of interest :wink:.   
+
+`--output`: Dumps the results obtained from OdourCollect directly to the specified file.
+The format is autodetected based on extension. `.csv` and `.xlsx` files are allowed. 
+Default value is `odourcollect.csv`, which will write a csv file in the working folder.
+Please note that we are very conservative here: 
+Absolute and relative paths are allowed, but ensure that the destination folder exists (by default, current working folder) and the file does not exist already.
+Otherwise, CLI tool will complain and will stop with exit code 2.
+
+`--odourlist`: Dumps the full list of odour categories and types to use with `--category` and `--type`:
+
+```
+Odour categories (to use in --category parameter:
+  Code  Category
+------  ----------------------------------------------------------------------------
+     1  Waste related odours
+     2  Waste water related odours
+     3  Agriculture and livestock related odours
+     4  Food Industries related odours
+     5  Industry related odours
+     6  Urban odours
+     7  Nice odours
+     8  Other odours not fitting elsewhere
+     9  No odour observations (for testing, for reporting the end of an odour, etc.)
+
+Odour types (to use in --type parameter:
+  Code  Category                 Odour Type
+------  -----------------------  -----------------------------------
+     1  Waste                    Fresh waste
+     2  Waste                    Decomposed waste
+     3  Waste                    Leachate
+     4  Waste                    Biogas
+     5  Waste                    Biofilter
+     6  Waste                    Ammonia
+     7  Waste                    Amines
+     8  Waste                    Other
+     9  Waste                    I don't know
+    10  Waste Water              Waste water
+    11  Waste Water              Rotten eggs
+    12  Waste Water              Sludge
+    13  Waste Water              Chlorine
+    14  Waste Water              Other
+    15  Waste Water              I don't know
+    16  Agriculture / Livestock  Dead animal
+    17  Agriculture / Livestock  Cooked meat
+    18  Agriculture / Livestock  Organic fertilizers (manure/slurry)
+    19  Agriculture / Livestock  Animal feed
+    20  Agriculture / Livestock  Cabbage soup
+    21  Agriculture / Livestock  Rotten eggs
+    22  Agriculture / Livestock  Ammonia
+    23  Agriculture / Livestock  Amines
+    24  Agriculture / Livestock  Other
+    25  Agriculture / Livestock  I don't know
+    26  Food Industries          Fat / Oil
+    27  Food Industries          Coffee
+    28  Food Industries          Cocoa
+    29  Food Industries          Milk / Dairy
+    30  Food Industries          Animal food
+    31  Food Industries          Ammonia
+    32  Food Industries          Malt / Hop
+    33  Food Industries          Fish
+    34  Food Industries          Bakeries
+    35  Food Industries          Raw meat
+    36  Food Industries          Ammines
+    37  Food Industries          Cabbage soup
+    38  Food Industries          Rotten eggs
+    39  Food Industries          Bread / Cookies
+    40  Food Industries          Alcohol
+    41  Food Industries          Aroma / Flavour
+    42  Food Industries          Other
+    43  Food Industries          I don't know
+    44  Industrial               Cabbage soup
+    45  Industrial               Oil / Petrochemical
+    46  Industrial               Gas
+    47  Industrial               Asphalt / Rubber
+    48  Industrial               Chemical
+    49  Industrial               Ammonia
+    50  Industrial               Leather
+    51  Industrial               Metal
+    52  Industrial               Plastic
+    53  Industrial               Sulphur
+    54  Industrial               Alcohol
+    55  Industrial               Ketone / Ester / Acetate / Ether
+    56  Industrial               Amines
+    57  Industrial               Glue / Adhesive
+    58  Urban                    Urine
+    59  Urban                    Traffic
+    60  Urban                    Sewage
+    61  Urban                    Waste bin
+    62  Urban                    Waste truck
+    63  Urban                    Sweat
+    64  Urban                    <not used>
+    65  Urban                    Fresh grass
+    66  Urban                    Humidity / Wet soil
+    67  Urban                    Flowers
+    68  Urban                    Food
+    69  Urban                    Chimney (burnt wood)
+    70  Urban                    Paint
+    71  Urban                    Fuel
+    72  Urban                    Other
+    73  Urban                    I don't know
+    74  Nice                     Flowers
+    75  Nice                     Food
+    76  Nice                     Bread / Cookies
+    77  Nice                     Fruit
+    78  Nice                     Fresh grass
+    79  Nice                     Forest / Trees / Nature
+    80  Nice                     Mint / Rosemary / Lavander
+    81  Nice                     Sea
+    82  Nice                     Perfume
+    83  Nice                     Chimney (burnt wood)
+    84  Nice                     Wood
+    85  Nice                     New book
+    86  Nice                     Other
+    87  Nice                     I don't know
+    88  No Odour                 No Odour
+    89  Other                    NA
+```
+Please note that each odour type code actually represents a combination of category + type.
+Some odour types appear more than once because they are associated to more than one category.
+This can be confusing sometimes, but it enables the analyst to obtain more nuances based on the category, 
+and have a better understanding of what the perception of the citizen was. 
+That is why we suggest you two ways in which you can filter the odour observation by type, the easiest 
+and the more detailed.
+
+## How to filter odour observations by type (the easiest way)
+This filter strategy is usually more than enough to perform interesting and relevant analysis.
+It has the advantadge of not having to deal with numeric codes while being specific enough.
+If you are getting started with OdourCollect data analysis, we suggest you to stick to the following:
+1. Just donwload the data with no category/type filters
+2. open it in your analysis tool (i.e. Microsoft Excel)
+3. Ignore the column `category` and proceed directly to the column `type`, 
+selecting the description of the odour you are interested in (i.e.: `ammonia`).
+
+Technically, this traduces to the following odour codes:
+   
+| Category                	| Type    	| Type code 	|
+|-------------------------	|---------	|:---------:	|
+| Waste                   	| Ammonia 	|     6     	|
+| Agriculture / Livestock 	| Ammonia 	|     22    	|
+| Food industries         	| Ammonia 	|     31    	|
+| Industrial              	| Ammonia 	|     49    	|
+
+But you will treat them as the same. This way, you will get all the odour observations that have been reported as ammonia, no matter the nuances.
+
+## How to filter odour observations by type (the more detailed way)
+Let's imagine that you are still interested in ammonia, but you want to focus on the odour observations in which the citizen 
+is suspicious about some agricultural/livestock activity nearby. So you are interested in knowing what category did the user select when he/she reported the odour, 
+because this is a way of getting such nuances.
+
+After typing in your command line `odurcollect.exe --odourlist` and checking the type codes table, 
+you realise that the odour type you are interested in is `31`. So you type the following command:
+
+`odourcollect.exe --type 31`
+
+This command will save `odourcollect.csv` in your current directory, 
+and the file will only contain observations of category `Agriculture / Livestock` and type `Ammonia`
+
+## Recommended tools to analyse the data downloaded with the CLI
+You suggest you to use the following tools to process the data you download with PyOdourCollect's CLI.
+They are in no particular order, and it's mostly a matter of choice.
+Also, there are many more not listed here that can perfectly suit your needs (feel free to let us know, so we can add them here):
+1. [Orange data mining](https://orangedatamining.com/). A free, python based, intutitive, graphic application designed to ease the process of data ingestion, transformation, analysis and visualisation. 
+You can use the mouse and a few clicks without knowing anything about code. It can also plot maps based on gps coordinates. We recommend it!
+2. Microsoft PowerBI. Microsoft's standard technology for data connectors and data analysis.
+It features interactive dashboards with interactive graphics that can be extremely useful to illustrate and demonstrate what's happening in a community affected by odour pollution, 
+including geographic maps, but it requieres more practice in comparison to other tools like Orange or Excel.  
+3. Microsoft Excel. The good old option for hobbyists and amateur Citizen Scientists. Its features are more than enough to filter, order, obtain statistics, detect some basic patterns and plot explanatory graphics based on the data.
+Want to see your favourite tool here? Let us know.
+
+
+
+
 
 
  
