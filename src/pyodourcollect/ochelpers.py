@@ -5,7 +5,7 @@ from datetime import date
 from tabulate import tabulate
 import haversine as hs
 import pathlib
-from ocmodels import *
+import pyodourcollect.ocmodels as ocmodels
 
 # import openpyxl
 
@@ -253,8 +253,8 @@ def build_df(json_response) -> pd.DataFrame:
 
 def calculate_distance(point1lat, point1long, point2lat, point2long):
     # calculates distance in Km between two sets of gps coordinates.
-    sanep1 = GPScoords(lat=float(point1lat), long=float(point1long))
-    sanep2 = GPScoords(lat=float(point2lat), long=float(point2long))
+    sanep1 = ocmodels.GPScoords(lat=float(point1lat), long=float(point1long))
+    sanep2 = ocmodels.GPScoords(lat=float(point2lat), long=float(point2long))
     # distance calculation with haversine (we don't need higher precision when we measure distances of a few kms!)
     return round(hs.haversine((sanep1.lat, sanep1.long), (sanep2.lat, sanep2.long)), 2)
 

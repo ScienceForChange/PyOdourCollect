@@ -49,3 +49,9 @@ OdourCollect.eu provides some additional data regarding odour observations. Howe
 The OdourCollect data that is not going to be provided by PyOdourCollect is:
 - Written comments made by the citizen regarding the odour itself or hypothesis about its possible origin at the time of observation. 
 - Full address that was inferred at the time of observation (it can be inferred from GPS coordinates anyway).
+
+# Installing the module and the CLI
+
+
+# Using the CLI
+I

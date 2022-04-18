@@ -2,9 +2,9 @@
 """
 import argparse
 import datetime
-import ochelpers
-import occore
-import ocmodels
+import pyodourcollect.ochelpers as ochelpers
+import pyodourcollect.occore as occore
+import pyodourcollect.ocmodels as ocmodels
 
 
 def main():
@@ -114,7 +114,7 @@ def main():
         subtype=odour_subtype
     )
     print('Making request to OdourCollect.eu API...')
-    df = occore.get_oc_data(requestparams, outputfile, poi_coords)
+    df = occore.get_oc_data(requestparams, poi_coords)
     print('Saving obtained data to file: {}'.format(outputfile))
     ochelpers.df_to_file(df, outputfile)
 
