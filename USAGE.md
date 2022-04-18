@@ -58,18 +58,22 @@ Wether you use the CLI to download OdourCollect's data in CSV/XLSX format, or yo
 | longitude      	| GPS coordinates of observation. Longitude.     	|
 | distance       	| Distance in Kms (with an accuracy of 0.01 Kms.) between the point of observation and a configurable Point of Interest (POI). This extra data is calculated by PyOdourCollect when the data analyst provides a set of coordinates for a given suspicious activity that motivates his/her analysis. In case that no POI coordinates are provided, this field is missing.      	|
 
-# What data is NOT provided by PyOdourCollect?
+## What data is NOT provided by PyOdourCollect?
 OdourCollect.eu provides some additional data regarding odour observations. However, this data is not available without performing one query to OdourCollect API per each observation. That would become much less practical and could put OdourCollect.eu server in jeopardy, so it will not be implemented.
 The OdourCollect data that is not going to be provided by PyOdourCollect is:
 - Written comments made by the citizen regarding the odour itself or hypothesis about its possible origin at the time of observation. 
 - Full address that was inferred at the time of observation (it can be inferred from GPS coordinates anyway).
 
-# Installing the module and the CLI
+## Installing the module and the CLI
 (soon)
 
-# Using the CLI
+## Using the CLI
 This module includes a command line interface tool that is installed as `odourcollect` (GNU/Linux, MacOS) or `odourcollect.exe` (Windows).
-
+### Stratightforward way: just run the CLI
+You can simply run the CLI with no parameters. It will automatically download all data from OdourCollect into a `odourcollect.csv`.
+Now you are ready to start analysing the data with you tool of choice.
+However, if you prefer to prefilter data or enrich it with some additional fields not provided by OdourCollect, keep reading.
+### CLI Arguments
 This is the full help and usage output of the tool:
 ```
 usage: OdourCollect [-h] [--startdate STARTDATE] [--enddate ENDDATE] [--category CATEGORY] [--odourtype ODOURTYPE]
@@ -150,8 +154,11 @@ Please note that we are very conservative here:
 Absolute and relative paths are allowed, but ensure that the destination folder exists (by default, current working folder) and the file does not exist already.
 Otherwise, CLI tool will complain and will stop with exit code 2.
 
-`--odourlist`: Dumps the full list of odour categories and types to use with `--category` and `--type`:
+`--odourlist`: Dumps the full list of odour categories and types to use with `--category` and `--type`. 
+See following section for more details. 
 
+### Full list of odour category and details 
+If you run the CLI tool with the parameter `--odourlist`, it will provide the following list:
 ```
 Odour categories (to use in --category parameter:
   Code  Category
@@ -266,7 +273,7 @@ and have a better understanding of what the perception of the citizen was.
 That is why we suggest you two ways in which you can filter the odour observation by type, the easiest 
 and the more detailed.
 
-## How to filter odour observations by type (the easiest way)
+### How to filter odour observations by type (the easiest way)
 This filter strategy is usually more than enough to perform interesting and relevant analysis.
 It has the advantadge of not having to deal with numeric codes while being specific enough.
 If you are getting started with OdourCollect data analysis, we suggest you to stick to the following:
@@ -286,7 +293,7 @@ Technically, this traduces to the following odour codes:
 
 But you will treat them as the same. This way, you will get all the odour observations that have been reported as ammonia, no matter the nuances.
 
-## How to filter odour observations by type (the more detailed way)
+### How to filter odour observations by type (the more detailed way)
 Let's imagine that you are still interested in ammonia, but you want to focus on the odour observations in which the citizen 
 is suspicious about some agricultural/livestock activity nearby. So you are interested in knowing what category did the user select when he/she reported the odour, 
 because this is a way of getting such nuances.
@@ -299,7 +306,7 @@ you realise that the odour type you are interested in is `31`. So you type the f
 This command will save `odourcollect.csv` in your current directory, 
 and the file will only contain observations of category `Agriculture / Livestock` and type `Ammonia`
 
-## Recommended tools to analyse the data downloaded with the CLI
+### Recommended tools to analyse the data downloaded with the CLI
 You suggest you to use the following tools to process the data you download with PyOdourCollect's CLI.
 They are in no particular order, and it's mostly a matter of choice.
 Also, there are many more not listed here that can perfectly suit your needs (feel free to let us know, so we can add them here):
