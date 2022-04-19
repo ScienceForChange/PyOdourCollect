@@ -264,7 +264,7 @@ def add_distance_from_poi(df: pd.DataFrame, poilat, poilong) -> pd.DataFrame:
     # we assume that a Pandas Dataframe made with build_df() is passed here
     df['distance'] = df.apply(lambda x: calculate_distance(x.latitude, x.longitude, poilat, poilong), axis=1)
     # df.style.format({'distance': '{:,.2f}'.format})
-
+    return df
 
 def check_path(filename):
     absolutepath = os.path.abspath(filename)
