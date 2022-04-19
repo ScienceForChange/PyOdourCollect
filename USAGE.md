@@ -317,6 +317,7 @@ You can use the mouse and a few clicks without knowing anything about code. It c
 It features interactive dashboards with interactive graphics that can be extremely useful to illustrate and demonstrate what's happening in a community affected by odour pollution, 
 including geographic maps, but it requieres more practice in comparison to other tools like Orange or Excel.  
 3. Microsoft Excel. The good old option for hobbyists and amateur Citizen Scientists. Its features are more than enough to filter, order, obtain statistics, detect some basic patterns and plot explanatory graphics based on the data.
+
 Want to see your favourite tool here? Let us know.
 
 ## Using PyOdourCollect module
