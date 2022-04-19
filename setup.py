@@ -21,7 +21,7 @@ setup(
     packages=["pyodourcollect"],
     package_dir={'pyodourcollect': 'src/pyodourcollect'},
     include_package_data=True,
-    install_requires=["requests", "pydantic", "haversine", "openpyxl"],
+    install_requires=["requests", "pydantic", "haversine", "openpyxl", "pandas"],
     entry_points={
         "console_scripts": [
             "odourcollect=pyodourcollect.command_line:main",
