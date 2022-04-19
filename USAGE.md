@@ -25,6 +25,12 @@ so they download the OdourCollect APP on their phones and start mapping odour ob
   </a>
 </p>
 
+## Installing the module and the CLI
+You can get pyodourcollect from PyPi:
+```
+pip install pyodourcollect
+```
+
 ## CLI Vs Module
 The command line interface (CLI) tool provided simplifies downloading data from OdourCollect in CSV or XLSX formats
 and is the to-go choice if you plan to analyze the data:
@@ -63,9 +69,6 @@ OdourCollect.eu provides some additional data regarding odour observations. Howe
 The OdourCollect data that is not going to be provided by PyOdourCollect is:
 - Written comments made by the citizen regarding the odour itself or hypothesis about its possible origin at the time of observation. 
 - Full address that was inferred at the time of observation (it can be inferred from GPS coordinates anyway).
-
-## Installing the module and the CLI
-(soon)
 
 ## Using the CLI
 This module includes a command line interface tool that is installed as `odourcollect` (GNU/Linux, MacOS) or `odourcollect.exe` (Windows).
