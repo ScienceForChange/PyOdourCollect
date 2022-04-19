@@ -10,7 +10,7 @@ def get_oc_data(query_params, gpscoords):
         exit(1)
     df = ochelpers.build_df(r.text)
     if gpscoords is not None:
-        ochelpers.add_distance_from_poi(df, gpscoords.lat, gpscoords.long)
+        df = ochelpers.add_distance_from_poi(df, gpscoords.lat, gpscoords.long)
     # print(tabulate(df, headers='keys', tablefmt='fancy_grid'))
     return df
     #  -s 2021-01-01 -e 2021-12-31 --hedonic=unpleasant
