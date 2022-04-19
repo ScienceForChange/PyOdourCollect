@@ -1,5 +1,5 @@
 import pathlib
-from distutils.core import setup
+from setuptools import setup
 WD = pathlib.Path(__file__).parent
 README = (WD / "README.md").read_text()
 setup(
