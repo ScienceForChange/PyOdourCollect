@@ -303,8 +303,9 @@ you realise that the odour type you are interested in is `31`. So you type the f
 
 `odourcollect.exe --type 31`
 
-This command will save `odourcollect.csv` in your current directory, 
-and the file will only contain observations of category `Agriculture / Livestock` and type `Ammonia`
+This command will save `odourcollect.csv` in your current directory.
+
+The file will only contain observations of category `Agriculture / Livestock` and type `Ammonia`.
 
 ### Recommended tools to analyse the data downloaded with the CLI
 You suggest you to use the following tools to process the data you download with PyOdourCollect's CLI.
@@ -318,10 +319,113 @@ including geographic maps, but it requieres more practice in comparison to other
 3. Microsoft Excel. The good old option for hobbyists and amateur Citizen Scientists. Its features are more than enough to filter, order, obtain statistics, detect some basic patterns and plot explanatory graphics based on the data.
 Want to see your favourite tool here? Let us know.
 
+## Using PyOdourCollect module
+Using PyOdourCollect is very easy. You only have to do four steps:
+1. Load module and helpers.
+2. Prepare a request.
+3. (Optional) prepare GPS coordinates of a suspicious Point Of Interest, if you have any.
+4. Send the request to OdourCollect, getting a DataFrame in exchange.
 
+### 1. Load module and helpers
+The examples here will assume that you loaded the pyodourcollect module and helpers this way:
+```
+import pyodourcollect.ochelpers as ochelpers
+import pyodourcollect.occore as occore
+import pyodourcollect.ocmodels as ocmodels
+```
 
+### 2. Prepare a request
 
+Compared to PyOdourCollect's CLI, using PyOdourCollect module directly just requires a bit more knowledge about how OdourCollect.eu API works, 
+and what parameters expect to receive. Things are self-explanatory and have similar counterparts in Command Line Interface tool.
 
+We provide a Pydantic model through pyodourcollect.ocmodels, making the process easier:
+
+```
+requestparams = ocmodels.OCRequest(
+                date_init=date_init,
+                date_end=date_end,
+                minAnnoy=min_annoy,
+                maxAnnoy=max_annoy,
+                minIntensity=min_intensity,
+                maxIntensity=max_intensity,
+                type=odour_type,
+                subtype=odour_subtype)
+```
+Explanation of the aforementioned parameters (all of them are optional):
+
+`date_init`: The equivalent of `--startdate` in CLI. Expects a date object.
+
+`date_end`: The equivalent of `--enddate` in CLI. Expects a date object.
+
+`minAnnoy`: Minimum degree of pleasantness/annoyance, from -4 (Extremely annoying) to 4 (Extremely pleasant).
+
+`maxAnnoy`: Maximum degree of pleasantness/annoyance, from -4 (Extremely annoying) to 4 (Extremely pleasant).
+
+> When using CLI, `minAnnoy` and `maxAnnoy` are not directly specified. Instead, you use the `--hedonic` parameter as a shorthand for pleasant (from 1 to 4), unpleasant (from -4 to -1) or neutral (just 0) odours. This was decided to avoid the hassle of handling negative numbers in command line arguments, which can be problematic.
+
+> Please note that `minAnnoy` can't be greater than maxAnnoy, and that the ranges always have to be expressed starting from the smaller number: for a range from -4 to 0, -4 is minAnnoy and 0 is maxAnnoy.
+
+`minIntensity`: Minimum degree of intensity, from 0 (not perceptible) to 6 (extremely strong). 
+
+`maxIntensity`: Maximum degree of intensity, from 0 (not perceptible) to 6 (extremely strong).
+
+> Again, please note that min values can't be greater that max values. Internal request validators will complain otherwise.
+
+`type`: Tier 1 classification of odour observations (known as "Type" in OdourCollect, "Category" in PyOdourCollect).
+
+`subtype`: Tier 2 classification of odour observations (known as "Subtype" in OdourCollect, "Type" in PyOdourCollect).
+
+### 3. (Optional) prepare GPS coords of a POI
+If you have the GPS coords of a suspicious Point Of Interest and you want to add them to the data, you can do it this way:
+
+```
+suspicious_coords = ocmodels.GPScoords(latitude, longitude)
+```
+where `latitude` and `longitude` are the gps coords of the facility, industry, farm, plant, etc. that you are investigating. 
+The GPScoords helper provides instant validation of valid GPS coordinates.
+
+### 4. Send the request to OdourCollect
+
+```
+my_ocdata = occore.get_oc_data(requestparams, suspicious_coords)
+```
+
+where `requestparams` and `suspicious_coords` are the OCRequest and GPScoords objects built in previous steps.
+In case you don't want to add distances from a given point, you can omit the creation of a GPSCoords object, 
+but you have to explicitly pass `None` as second parameter to `occore.get_oc_data`.
+
+After that, `my_ocdata` will contain a Pandas DataFrame object with all the data ready to use.
+
+So, a typical Python script to gather data from OdourCollect specifying all request parameters would be as follows:
+
+```
+import pyodourcollect.ochelpers as ochelpers
+import pyodourcollect.occore as occore
+import pyodourcollect.ocmodels as ocmodels
+from datetime import datetime
+
+date_init = datetime.strptime('31-01-2020', '%Y-%m-%d')  # just random example
+date_end = datetime.strptime('30-02-2020', '%Y-%m-%d')  # just random example
+
+requestparams = ocmodels.OCRequest(
+                date_init=date_init,
+                date_end=date_end,
+                minAnnoy=-4,
+                maxAnnoy=4,
+                minIntensity=0,
+                maxIntensity=6,
+                type=0,
+                subtype=0)
+suspicious_coords = ocmodels.GPScoords(41.409032, 2.222619)  # Example. A waste water processing plant in Barcelona
+my_ocdata = occore.get_oc_data(requestparams, suspicious_coords)
+```
+
+**BONUS TRACK**: One liner to get all data from OdourCollect quickly and easily:
+
+```
+my_ocdata = occore.get_oc_data(ocmodels.OCRequest(), None)  # Requests with no filter parameters cause OdourCollect to yield all data.
+```
 
  
 
