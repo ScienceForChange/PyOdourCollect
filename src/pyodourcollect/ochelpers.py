@@ -2,12 +2,9 @@ import json
 import os
 import pandas as pd
 from datetime import date
-from tabulate import tabulate
 import haversine as hs
 import pathlib
 import pyodourcollect.ocmodels as ocmodels
-
-# import openpyxl
 
 OC_ENDPOINT = 'https://odourcollect.eu/api/odor/list'
 
@@ -240,14 +237,6 @@ def build_df(json_response) -> pd.DataFrame:
     df = df[['user', 'date', 'time', 'week_day', 'category', 'type', 'hedonic_tone_n', 'hedonic_tone_t', 'intensity_n',
              'intensity_t', 'duration', 'latitude', 'longitude']]
 
-    """
-    # Type casts should not be necessary with current approach
-    df['intensity'] = df['intensity'].apply(int)
-    df['hedonic tone'] = df['hedonic tone'].apply(int)
-    df['latitude'] = df['latitude'].apply(float)
-    df['longitude'] = df['longitude'].apply(float)
-    """
-    # print(tabulate(df, headers='keys', tablefmt='fancy_grid'))
     return df
 
 
