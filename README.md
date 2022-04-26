@@ -13,7 +13,7 @@ OdourCollect's main goal is providing an open, free platform for the citizens to
 Albeit it allows reporting nice odours as well as bad ones, it has become popular for its potential to provide hard evidence of bad odour episodes 
 happening in neighborhoods that are affected by odour emiting facilities like waste water processing, livestock, oil etc.
 
-OdourCollect was an idea of Rosa Arias, CEO and founder of [Science for Change](https://scienceforchange.eu),  inspired by a standardized European methodology to evaluate odour episodes through citizens' observations, `CEN 16841` which in turn is based on the German standard `VDI 3940:2006`. 
+OdourCollect was an idea of Rosa Arias, CEO and founder of [Science for Change](https://scienceforchange.eu),  inspired by a standardized European methodology to evaluate odour episodes through field observation, `CEN 16841` which in turn is based on the German standards `VDI3882-1` and `VDI3882-2`. 
 The last public version of OdourCollect's open source code can be obtained in [this repository](https://github.com/ScienceForChange/odourcollect.eu).    
 
 OdourCollect has validated its bottom-up methodology in 10 pilot projects in 10 countries (Spain, Portugal, Greece, Bulgaria, Chile, Italy, UK, Germany, Austria and Uganda) and has been supported by Spanish and European grants since it was first launched in 2019:
