@@ -24,3 +24,24 @@ OdourCollect has validated its bottom-up methodology in 10 pilot projects in 10 
 - Even though ambient odours are the second cause of environmental complaints after noise worldwide, lots of countries worldwide lack a legal regulatory framework to protect citizens' rights and health.
 You can learn more about existing regulations in odour pollution in the [D-NOSES Policy brief](https://dnoses.eu/policy-brief).
 - If your community is affected by odour pollution problems, you can [contact Science for Change](mailto://hello@scienceforchange.eu) for an evaluation of your case.
+
+## About MECODA and COS4CLOUD
+This data parsing library has been specifically developed for [MECODA](https://github.com/eosc-cos4cloud/mecoda-orange), 
+a toolkit built around [Orange Data Mining](https://orangedatamining.com/) for Citizen Observatory data analysis.
+
+MECODA is part of the technological services for Citizen Observatories that are developed in the context of 
+[COS4CLOUD](https://cos4cloud-eosc.eu/) project, funded by the European Union’s Horizon 2020 research and innovation 
+programme under grant agreement #863463.
+
+Please visit [COS4CLOUD's web site](https://cos4cloud-eosc.eu) for more info on how COS4CLOUD empowers Citizen Science with technology and tools.
+
+<img src="https://ec.europa.eu/info/sites/default/themes/europa/images/svg/logo/logo--en.svg" width="240px"/>
+<img src="https://cos4cloud-eosc.eu/wp-content/uploads/2020/07/logo-cos4cloud-middle.png" width="240px"/>
+
+
+## About Science for Change
+<img src="https://www.scienceforchange.eu/wp-content/uploads/2021/06/Logos-SfC-color-2.png" width="240px"/>
+
+If you want to tackle a social, environmental or health challenges that require data to be gathered and analysed, you can count on 
+Science for Change for designing, developing, creating a community around, or leverage data from a Citizen Observatory.
+[Contact Science for Change](mailto://hello@scienceforchange.eu) for an evaluation of your case.
